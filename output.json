@@ -1,0 +1,102 @@
+[
+  {
+    "name": "ハピネスマインド",
+    "play_game_count": 26,
+    "win": 3,
+    "lose": 23,
+    "course_aptitude": "turf",
+    "distance_aptitude": "sprint",
+    "running_style": "front_runner",
+    "heavy_racetrack": "tokui"
+  },
+  {
+    "name": "セパヌイール",
+    "play_game_count": 29,
+    "win": 7,
+    "lose": 22,
+    "course_aptitude": "turf",
+    "distance_aptitude": "sprint",
+    "running_style": "front_runner",
+    "heavy_racetrack": "tokui"
+  },
+  {
+    "name": "ルイドフィーネ",
+    "play_game_count": 24,
+    "win": 3,
+    "lose": 21,
+    "course_aptitude": "turf",
+    "distance_aptitude": "sprint",
+    "running_style": "front_runner",
+    "heavy_racetrack": "tokui"
+  },
+  {
+    "name": "クマサンニデアッタ",
+    "play_game_count": 30,
+    "win": 2,
+    "lose": 28,
+    "course_aptitude": "turf",
+    "distance_aptitude": "sprint",
+    "running_style": "front_runner",
+    "heavy_racetrack": "tokui"
+  },
+  {
+    "name": "ソプラドール",
+    "play_game_count": 26,
+    "win": 3,
+    "lose": 23,
+    "course_aptitude": "dirt",
+    "distance_aptitude": "sprint",
+    "running_style": "front_runner",
+    "heavy_racetrack": "tokui"
+  },
+  {
+    "name": "ミラバーグマン",
+    "play_game_count": 14,
+    "win": 4,
+    "lose": 10,
+    "course_aptitude": "turf",
+    "distance_aptitude": "sprint",
+    "running_style": "front_runner",
+    "heavy_racetrack": "tokui"
+  },
+  {
+    "name": "コスモレペティール",
+    "play_game_count": 36,
+    "win": 8,
+    "lose": 28,
+    "course_aptitude": "turf",
+    "distance_aptitude": "sprint",
+    "running_style": "front_runner",
+    "heavy_racetrack": "tokui"
+  },
+  {
+    "name": "シゲルルビー",
+    "play_game_count": 43,
+    "win": 11,
+    "lose": 32,
+    "course_aptitude": "turf",
+    "distance_aptitude": "sprint",
+    "running_style": "front_runner",
+    "heavy_racetrack": "tokui"
+  },
+  {
+    "name": "コウユーモテモテ",
+    "play_game_count": 22,
+    "win": 7,
+    "lose": 15,
+    "course_aptitude": "turf",
+    "distance_aptitude": "sprint",
+    "running_style": "front_runner",
+    "heavy_racetrack": "tokui"
+  },
+  {
+    "name": "ベルゼール",
+    "play_game_count": 17,
+    "win": 3,
+    "lose": 14,
+    "course_aptitude": "dirt",
+    "distance_aptitude": "styer",
+    "running_style": "hold_up_runner",
+    "heavy_racetrack": "nigate"
+  }
+]
