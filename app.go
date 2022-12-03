@@ -47,6 +47,10 @@ func (a *App) JsonOutputKeiba(url string) (string, error) {
 		return "", errors.New("馬詳細情報の取得に失敗しました")
 	}
 
+	if err := os.MkdirAll("output", 0777); err != nil {
+		return "", errors.New("馬情報フォルダの作成に失敗しました")
+	}
+
 	file, err := os.Create(`./output/output.json`)
 	if err != nil {
 		return "", errors.New("JSONの出力に失敗しました")
