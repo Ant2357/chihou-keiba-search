@@ -1,9 +1,9 @@
 [
   {
     "name": "ハピネスマインド",
-    "play_game_count": 26,
+    "play_game_count": 27,
     "win": 3,
-    "lose": 23,
+    "lose": 24,
     "course_aptitude": "turf",
     "distance_aptitude": "sprint",
     "running_style": "front_runner",
