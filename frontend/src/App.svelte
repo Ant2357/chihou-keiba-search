@@ -2,7 +2,7 @@
   import logo from './assets/images/logo-universal.png'
   import {JsonOutputKeiba} from "../wailsjs/go/main/App.js"
 
-  let resultText = "Please enter your name below 👇"
+  let resultText = ""
   let url
 
   function jsonOutputKeiba() {
@@ -14,70 +14,62 @@
   }
 </script>
 
-<main>
-  <img alt="Wails logo" id="logo" src="{logo}">
-  <div class="result" id="result">{resultText}</div>
-  <div class="input-box" id="input">
-    <input autocomplete="off" bind:value={url} class="input" id="url" type="text"/>
-    <button class="btn" on:click={jsonOutputKeiba}>Search</button>
+<div class="container-top container vh-100">
+  <div class="row vh-100">
+    <div class="col align-self-center">
+      <div class="card-home card shadow">
+        <div class="card-body card-home-text">
+          <div class="text-center pt-4">
+            <img
+              id="logo"
+              alt="Wails logo"
+              src="{logo}"
+              class="card-img-top h-50 w-50"
+            >
+          </div>
+
+          <div class="container">
+            <div class="text-center">
+              <h1 class="display-4">こんにちは!</h1>
+              <p class="lead">netkeibaのレースURL情報を打ち込むと、ローカルにjsonファイルを出力します</p>
+            </div>
+          </div>
+
+          <div>
+            <div class="mb-3">
+              <p class="text-center">{resultText}</p>
+            </div>
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="URLを入力"
+                bind:value={url}
+              >
+              <button
+                class="btn btn-outline-success"
+                type="button"
+                on:click={jsonOutputKeiba}
+              >
+                <i class="fas fa-search"></i> 検索
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</main>
+</div>
 
 <style>
+.card-home {
+  transform: rotate(2deg);
+}
+.card-home-text {
+  transform:skew(0deg, -2deg);
+}
 
-  #logo {
-    display: block;
-    width: 50%;
-    height: 50%;
-    margin: auto;
-    padding: 10% 0 0;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-origin: content-box;
-  }
-
-  .result {
-    height: 20px;
-    line-height: 20px;
-    margin: 1.5rem auto;
-  }
-
-  .input-box .btn {
-    width: 60px;
-    height: 30px;
-    line-height: 30px;
-    border-radius: 3px;
-    border: none;
-    margin: 0 0 0 20px;
-    padding: 0 8px;
-    cursor: pointer;
-  }
-
-  .input-box .btn:hover {
-    background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
-    color: #333333;
-  }
-
-  .input-box .input {
-    border: none;
-    border-radius: 3px;
-    outline: none;
-    height: 30px;
-    line-height: 30px;
-    padding: 0 10px;
-    background-color: rgba(240, 240, 240, 1);
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .input-box .input:hover {
-    border: none;
-    background-color: rgba(255, 255, 255, 1);
-  }
-
-  .input-box .input:focus {
-    border: none;
-    background-color: rgba(255, 255, 255, 1);
-  }
-
+.container-top {
+  max-width: 960px;
+}
 </style>
