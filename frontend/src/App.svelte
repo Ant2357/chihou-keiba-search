@@ -6,6 +6,7 @@
   let url
 
   function jsonOutputKeiba() {
+      resultText = "ロード中…";
     JsonOutputKeiba(url).then(result => {
       resultText = result;
     }).catch(error => {
@@ -51,7 +52,7 @@
                 type="button"
                 on:click={jsonOutputKeiba}
               >
-                <i class="fas fa-search"></i> 検索
+                <i class="fas fa-search"></i> 生成
               </button>
             </div>
           </div>
