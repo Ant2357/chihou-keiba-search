@@ -78,6 +78,29 @@ func Horses(url string) ([]Horse, error) {
 		return nil, errors.New("ロードに失敗しました")
 	}
 
+	// 脚質
+	runningStyles := map[string]string{}
+
+	// 逃げ情報
+	doc.Find("#Netkeiba_Race_Nar_Shutuba > div.Wrap.fc > div.RaceColumn02 > table > tbody > tr:nth-child(1) > td > div > .UmaName").Each(func(i int, s *goquery.Selection) {
+		runningStyles[s.Text()] = "nige"
+	})
+
+	// 先行情報
+	doc.Find("#Netkeiba_Race_Nar_Shutuba > div.Wrap.fc > div.RaceColumn02 > table > tbody > tr:nth-child(2) > td > div > .UmaName").Each(func(i int, s *goquery.Selection) {
+		runningStyles[s.Text()] = "senkou"
+	})
+
+	// 差し情報
+	doc.Find("#Netkeiba_Race_Nar_Shutuba > div.Wrap.fc > div.RaceColumn02 > table > tbody > tr:nth-child(3) > td > div > .UmaName").Each(func(i int, s *goquery.Selection) {
+		runningStyles[s.Text()] = "sashi"
+	})
+
+	// 追い込み情報
+	doc.Find("#Netkeiba_Race_Nar_Shutuba > div.Wrap.fc > div.RaceColumn02 > table > tbody > tr:nth-child(4) > td > div > .UmaName").Each(func(i int, s *goquery.Selection) {
+		runningStyles[s.Text()] = "oikomi"
+	})
+
 	horses := make([]Horse, 0)
 	doc.Find(".HorseInfo > div > div > span.HorseName > a").Each(func(i int, s *goquery.Selection) {
 		href, _ := s.Attr("href")
@@ -119,10 +142,7 @@ func Horses(url string) ([]Horse, error) {
 			"styer")
 
 		// 脚質
-		runningStyle := readAptitude(
-			"#db_main_box > div.db_main_deta > div > div.db_prof_area_01 > div.db_prof_box > dl > dd > table > tbody > tr:nth-child(3) > td > img:nth-child(1)",
-			"front_runner",
-			"hold_up_runner")
+		runningStyle := runningStyles[name[:9]]
 
 		// 重馬場
 		heavyRacetrack := readAptitude(

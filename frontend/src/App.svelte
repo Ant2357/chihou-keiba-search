@@ -1,16 +1,18 @@
 <script>
   import logo from './assets/images/logo-universal.png'
-  import {JsonOutputKeiba} from "../wailsjs/go/main/App.js"
+  import {WebScrapingHorses} from "../wailsjs/go/main/App.js"
 
-  let resultText = ""
+  let searchResult = []
+  let message = ""
   let url
 
-  function jsonOutputKeiba() {
-      resultText = "ロード中…";
-    JsonOutputKeiba(url).then(result => {
-      resultText = result;
+  function webScrapingHorses() {
+      message = "ロード中…";
+    WebScrapingHorses(url).then(result => {
+      searchResult = result;
+      message = "読み込み完了";
     }).catch(error => {
-      resultText = error;
+      message = error;
     })
   }
 </script>
@@ -32,14 +34,15 @@
           <div class="container">
             <div class="text-center">
               <h1 class="display-4">こんにちは!</h1>
-              <p class="lead">netkeibaのレースURL情報を打ち込むと、ローカルにjsonファイルを出力します</p>
+              <p class="lead">netkeibaのレースURL情報を打ち込むと、レース情報が表示されます</p>
             </div>
           </div>
 
           <div>
             <div class="mb-3">
-              <p class="text-center">{resultText}</p>
+              <p class="text-center">{message}</p>
             </div>
+
             <div class="input-group mb-3">
               <input
                 type="text"
@@ -50,12 +53,48 @@
               <button
                 class="btn btn-outline-success"
                 type="button"
-                on:click={jsonOutputKeiba}
+                on:click={webScrapingHorses}
               >
                 <i class="fas fa-search"></i> 生成
               </button>
             </div>
+
+            <div class="mb-3">
+              {#if Object.keys(searchResult).length !== 0}
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">名前</th>
+                      <th scope="col">レース数</th>
+                      <th scope="col">勝利数</th>
+                      <th scope="col">敗北数</th>
+                      <th scope="col">コース適正</th>
+                      <th scope="col">距離適正</th>
+                      <th scope="col">脚質</th>
+                      <th scope="col">重馬場</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {#each searchResult as horse, i}
+                      <tr>
+                        <th>{i + 1}</th>
+                        <th>{horse.name}</th>
+                        <th>{horse.play_game_count}</th>
+                        <th>{horse.win}</th>
+                        <th>{horse.lose}</th>
+                        <th>{horse.course_aptitude}</th>
+                        <th>{horse.distance_aptitude}</th>
+                        <th>{horse.running_style}</th>
+                        <th>{horse.heavy_racetrack}</th>
+                      </tr>
+                    {/each}
+                  </tbody>
+                </table>
+              {/if}
+            </div>
           </div>
+
         </div>
       </div>
     </div>
