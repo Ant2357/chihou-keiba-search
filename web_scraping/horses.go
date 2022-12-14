@@ -168,7 +168,14 @@ func Horses(url string) ([]Horse, error) {
 			}
 
 			raceName := selection.Find("td:nth-child(5)").Text()
-			result := toInt64(selection.Find("td:nth-child(12)").Text())
+
+			var result int64
+			strResult := selection.Find("td:nth-child(12)").Text()
+			if strResult == "除" {
+				result = -1
+			} else {
+				result = toInt64(strResult)
+			}
 			distance := selection.Find("td:nth-child(15)").Text()
 			baba := selection.Find("td:nth-child(16)").Text()
 
