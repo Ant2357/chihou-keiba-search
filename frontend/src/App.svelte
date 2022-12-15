@@ -1,14 +1,14 @@
 <script>
   import logo from './assets/images/logo-universal.png'
-  import {WebScrapingHorses} from "../wailsjs/go/main/App.js"
+  import {WebScrapingRace} from "../wailsjs/go/main/App.js"
 
-  let searchResult = []
+  let url = ""
+  let searchResult = {}
   let message = ""
-  let url
 
-  function webScrapingHorses() {
+  function webScrapingRace() {
       message = "ロード中…";
-    WebScrapingHorses(url).then(result => {
+    WebScrapingRace(url).then(result => {
       searchResult = result;
       message = "読み込み完了";
     }).catch(error => {
@@ -53,14 +53,19 @@
               <button
                 class="btn btn-outline-success"
                 type="button"
-                on:click={webScrapingHorses}
+                on:click={webScrapingRace}
               >
                 <i class="fas fa-search"></i> 生成
               </button>
             </div>
 
             <div class="mb-3">
+
               {#if Object.keys(searchResult).length !== 0}
+                <div class="mb-3">
+                  <h4>{searchResult.name}({searchResult.racetrack}{searchResult.distance})</h4>
+                </div>
+
                 <table class="table">
                   <thead>
                     <tr>
@@ -76,7 +81,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {#each searchResult as horse, i}
+                    {#each searchResult.horses as horse, i}
                       <tr>
                         <th>{i + 1}</th>
                         <th>{horse.name}</th>

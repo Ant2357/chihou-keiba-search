@@ -16,6 +16,13 @@ import (
 	"golang.org/x/net/html/charset"
 )
 
+type Race struct {
+	Name      string  `json:"name"`
+	RaceTrack string  `json:"racetrack"`
+	Distance  string  `json:"distance"`
+	Horses    []Horse `json:"horses"`
+}
+
 type Horse struct {
 	Name             string       `json:"name"`
 	PlayGameCount    int          `json:"play_game_count"`
@@ -72,10 +79,10 @@ func loadDocument(url string) (*goquery.Document, error) {
 	return doc, nil
 }
 
-func Horses(url string) ([]Horse, error) {
+func ReadRace(url string) (Race, error) {
 	doc, err := loadDocument(url)
 	if err != nil {
-		return nil, errors.New("ロードに失敗しました")
+		return Race{}, errors.New("ロードに失敗しました")
 	}
 
 	// 脚質
@@ -83,22 +90,22 @@ func Horses(url string) ([]Horse, error) {
 
 	// 逃げ情報
 	doc.Find("#Netkeiba_Race_Nar_Shutuba > div.Wrap.fc > div.RaceColumn02 > table > tbody > tr:nth-child(1) > td > div > .UmaName").Each(func(i int, s *goquery.Selection) {
-		runningStyles[s.Text()] = "nige"
+		runningStyles[s.Text()] = "逃げ"
 	})
 
 	// 先行情報
 	doc.Find("#Netkeiba_Race_Nar_Shutuba > div.Wrap.fc > div.RaceColumn02 > table > tbody > tr:nth-child(2) > td > div > .UmaName").Each(func(i int, s *goquery.Selection) {
-		runningStyles[s.Text()] = "senkou"
+		runningStyles[s.Text()] = "先行"
 	})
 
 	// 差し情報
 	doc.Find("#Netkeiba_Race_Nar_Shutuba > div.Wrap.fc > div.RaceColumn02 > table > tbody > tr:nth-child(3) > td > div > .UmaName").Each(func(i int, s *goquery.Selection) {
-		runningStyles[s.Text()] = "sashi"
+		runningStyles[s.Text()] = "差し"
 	})
 
 	// 追い込み情報
 	doc.Find("#Netkeiba_Race_Nar_Shutuba > div.Wrap.fc > div.RaceColumn02 > table > tbody > tr:nth-child(4) > td > div > .UmaName").Each(func(i int, s *goquery.Selection) {
-		runningStyles[s.Text()] = "oikomi"
+		runningStyles[s.Text()] = "追い込み"
 	})
 
 	horses := make([]Horse, 0)
@@ -132,14 +139,14 @@ func Horses(url string) ([]Horse, error) {
 		// コース適正
 		courseAptitude := readAptitude(
 			"#db_main_box > div.db_main_deta > div > div.db_prof_area_01 > div.db_prof_box > dl > dd > table > tbody > tr:nth-child(1) > td > img:nth-child(1)",
-			"turf",
-			"dirt")
+			"ターフ",
+			"ダート")
 
 		// 距離適正
 		distanceAptitude := readAptitude(
 			"#db_main_box > div.db_main_deta > div > div.db_prof_area_01 > div.db_prof_box > dl > dd > table > tbody > tr:nth-child(2) > td > img:nth-child(1)",
-			"sprint",
-			"styer")
+			"スプリンター",
+			"ステイヤー")
 
 		// 脚質
 		runningStyle := runningStyles[name[:9]]
@@ -147,8 +154,8 @@ func Horses(url string) ([]Horse, error) {
 		// 重馬場
 		heavyRacetrack := readAptitude(
 			"#db_main_box > div.db_main_deta > div > div.db_prof_area_01 > div.db_prof_box > dl > dd > table > tbody > tr:nth-child(5) > td > img:nth-child(1)",
-			"tokui",
-			"nigate")
+			"得意",
+			"苦手")
 
 		raceResults := make([]RaceResult, 0)
 		horseDoc.Find("#contents > div.db_main_race.fc > div > table > tbody > tr").Each(func(j int, selection *goquery.Selection) {
@@ -200,5 +207,17 @@ func Horses(url string) ([]Horse, error) {
 			Results:          raceResults,
 		})
 	})
-	return horses, nil
+
+	raceName := strings.TrimSpace(doc.Find("#Netkeiba_Race_Nar_Shutuba > div.Wrap.fc > div.RaceColumn01 > div > div.RaceMainColumn > div.RaceList_NameBox > div.RaceList_Item02 > div.RaceName").Text())
+	raceTrack := doc.Find("#Netkeiba_Race_Nar_Shutuba > div.Wrap.fc > div.RaceColumn01 > div > div.RaceMainColumn > div.RaceList_NameBox > div.RaceList_Item02 > div.RaceData02 > span:nth-child(2)").Text()
+	distance := strings.TrimSpace(doc.Find("#Netkeiba_Race_Nar_Shutuba > div.Wrap.fc > div.RaceColumn01 > div > div.RaceMainColumn > div.RaceList_NameBox > div.RaceList_Item02 > div.RaceData01 > span:nth-child(1)").Text())
+
+	race := Race{
+		Name:      raceName,
+		RaceTrack: raceTrack,
+		Distance:  distance,
+		Horses:    horses,
+	}
+
+	return race, nil
 }

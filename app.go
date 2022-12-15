@@ -23,13 +23,13 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-func (a *App) WebScrapingHorses(url string) ([]web_scraping.Horse, error) {
+func (a *App) WebScrapingRace(url string) (web_scraping.Race, error) {
 	// netKeibaURL := "https://nar.netkeiba.com/race/shutuba.html?race_id=202244111711&rf=race_submenu"
 
-	horses, err := web_scraping.Horses(url)
+	race, err := web_scraping.ReadRace(url)
 	if err != nil {
-		return []web_scraping.Horse{}, errors.New("馬情報の取得に失敗しました")
+		return web_scraping.Race{}, errors.New("馬情報の取得に失敗しました")
 	}
 
-	return horses, nil
+	return race, nil
 }
