@@ -4,6 +4,8 @@
 
   let url = ""
   let searchResult = {}
+  let raceResults = []
+  let selectHorse = ""
   let message = ""
 
   function webScrapingRace() {
@@ -15,13 +17,18 @@
       message = error;
     })
   }
+
+  function readRaceResults(index) {
+    raceResults = searchResult.horses[index].results;
+    selectHorse = searchResult.horses[index].name;
+  }
 </script>
 
 <div class="container-top container vh-100">
   <div class="row vh-100">
     <div class="col align-self-center">
-      <div class="card-home card shadow">
-        <div class="card-body card-home-text">
+      <div class="card-rotate card shadow">
+        <div class="card-body card-rotate-text">
           <div class="text-center pt-4">
             <img
               id="logo"
@@ -60,7 +67,6 @@
             </div>
 
             <div class="mb-3">
-
               {#if Object.keys(searchResult).length !== 0}
                 <div class="mb-3">
                   <h4>{searchResult.name}({searchResult.racetrack}{searchResult.distance})</h4>
@@ -84,18 +90,51 @@
                     {#each searchResult.horses as horse, i}
                       <tr>
                         <th>{i + 1}</th>
-                        <th>{horse.name}</th>
-                        <th>{horse.play_game_count}</th>
-                        <th>{horse.win}</th>
-                        <th>{horse.lose}</th>
-                        <th>{horse.course_aptitude}</th>
-                        <th>{horse.distance_aptitude}</th>
-                        <th>{horse.running_style}</th>
-                        <th>{horse.heavy_racetrack}</th>
+                        <td><a href="#race_results" class="link-primary" on:click={() => readRaceResults(i)}>{horse.name}</a></td>
+                        <td>{horse.play_game_count}</td>
+                        <td>{horse.win}</td>
+                        <td>{horse.lose}</td>
+                        <td>{horse.course_aptitude}</td>
+                        <td>{horse.distance_aptitude}</td>
+                        <td>{horse.running_style}</td>
+                        <td>{horse.heavy_racetrack}</td>
                       </tr>
                     {/each}
                   </tbody>
                 </table>
+              {/if}
+            </div>
+
+            <div id="race_results" class="mb-3">
+              {#if Object.keys(raceResults).length !== 0}
+                <div class="mb-3">
+                  <h4>{selectHorse}</h4>
+                </div>
+
+                <div class="mb-3">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">日付</th>
+                        <th scope="col">レース名</th>
+                        <th scope="col">着順</th>
+                        <th scope="col">距離</th>
+                        <th scope="col">馬場</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {#each raceResults as race}
+                        <tr>
+                          <td>{race.date.replaceAll(/T.*/g, "").replaceAll("-", "/")}</td>
+                          <td>{race.raceName}</td>
+                          <td>{race.result}</td>
+                          <td>{race.distance}</td>
+                          <td>{race.baba}</td>
+                        </tr>
+                      {/each}
+                    </tbody>
+                  </table>
+                </div>
               {/if}
             </div>
           </div>
@@ -107,10 +146,10 @@
 </div>
 
 <style>
-.card-home {
+.card-rotate {
   transform: rotate(2deg);
 }
-.card-home-text {
+.card-rotate-text {
   transform:skew(0deg, -2deg);
 }
 
