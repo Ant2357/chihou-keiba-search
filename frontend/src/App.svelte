@@ -131,7 +131,7 @@
                     </thead>
                     <tbody>
                       {#each raceResults as race}
-                        <tr>
+                        <tr class="{searchResult.distance === `${race.distance}m` ? 'table-success' : ''}">
                           <td>{race.date.replaceAll(/T.*/g, "").replaceAll("-", "/")}</td>
                           <td>{race.raceName}</td>
                           <td>{race.result}</td>
