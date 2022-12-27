@@ -1,4 +1,6 @@
 <script>
+  import Fa from 'svelte-fa'
+  import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons'
   import logo from './assets/images/logo-universal.png'
   import {WebScrapingRace} from "../wailsjs/go/main/App.js"
 
@@ -9,7 +11,7 @@
   let message = ""
 
   function webScrapingRace() {
-      message = "ロード中…";
+      message = "ロード中";
     WebScrapingRace(url).then(result => {
       searchResult = result;
       message = "読み込み完了";
@@ -46,8 +48,11 @@
           </div>
 
           <div>
-            <div class="mb-3">
-              <p class="text-center">{message}</p>
+            <div class="text-center mb-3">
+              {#if message === "ロード中"}
+                <p><Fa icon={faSpinner} size="3x" pulse /></p>
+              {/if}
+              <p>{message}</p>
             </div>
 
             <div class="input-group mb-3">
@@ -62,6 +67,7 @@
                 type="button"
                 on:click={webScrapingRace}
               >
+                <Fa icon={faSearch} />
                 <i class="fas fa-search"></i> 生成
               </button>
             </div>
