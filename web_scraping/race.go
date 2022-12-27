@@ -41,6 +41,7 @@ type RaceResult struct {
 	Result   int       `json:"result"`
 	Distance string    `json:"distance"`
 	Baba     string    `json:"baba"`
+	Time     string    `json:"time"`
 }
 
 func toInt64(strVal string) int64 {
@@ -185,6 +186,7 @@ func ReadRace(url string) (Race, error) {
 			}
 			distance := selection.Find("td:nth-child(15)").Text()
 			baba := selection.Find("td:nth-child(16)").Text()
+			time := selection.Find("td:nth-child(18)").Text()
 
 			raceResults = append(raceResults, RaceResult{
 				Date:     date,
@@ -192,6 +194,7 @@ func ReadRace(url string) (Race, error) {
 				Result:   int(result),
 				Distance: distance,
 				Baba:     baba,
+				Time:     time,
 			})
 		})
 

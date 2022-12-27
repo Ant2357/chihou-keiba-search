@@ -126,6 +126,7 @@
                         <th scope="col">着順</th>
                         <th scope="col">距離</th>
                         <th scope="col">馬場</th>
+                        <th scope="col">タイム</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -136,6 +137,7 @@
                           <td>{race.result}</td>
                           <td>{race.distance}</td>
                           <td>{race.baba}</td>
+                          <td>{race.time}</td>
                         </tr>
                       {/each}
                     </tbody>

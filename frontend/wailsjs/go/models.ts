@@ -7,6 +7,7 @@ export namespace web_scraping {
 	    result: number;
 	    distance: string;
 	    baba: string;
+	    time: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new RaceResult(source);
@@ -19,6 +20,7 @@ export namespace web_scraping {
 	        this.result = source["result"];
 	        this.distance = source["distance"];
 	        this.baba = source["baba"];
+	        this.time = source["time"];
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {
