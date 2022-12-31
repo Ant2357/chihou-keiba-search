@@ -1,13 +1,16 @@
 <script>
   import Fa from 'svelte-fa'
-  import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons'
+  import { faSearch } from '@fortawesome/free-solid-svg-icons'
   import logo from './assets/images/logo-universal.png'
   import {WebScrapingRace} from "../wailsjs/go/main/App.js"
 
   let url = ""
   let searchResult = {}
   let raceResults = []
-  let selectHorse = ""
+  let selectHorse = {
+    name: "",
+    imgUrl: ""
+  }
   let message = ""
 
   function webScrapingRace() {
@@ -22,7 +25,8 @@
 
   function readRaceResults(index) {
     raceResults = searchResult.horses[index].results;
-    selectHorse = searchResult.horses[index].name;
+    selectHorse.name = searchResult.horses[index].name;
+    selectHorse.imgUrl = searchResult.horses[index].img_url;
   }
 </script>
 
@@ -31,7 +35,7 @@
     <div class="col align-self-center">
       <div class="card-rotate card shadow">
         <div class="card-body card-rotate-text">
-          <div class="text-center pt-4">
+          <div class="text-center pt-4 mb-3">
             <img
               id="logo"
               alt="Wails logo"
@@ -43,14 +47,16 @@
           <div class="container">
             <div class="text-center">
               <h1 class="display-4">こんにちは!</h1>
-              <p class="lead">netkeibaのレースURL情報を打ち込むと、レース情報が表示されます</p>
+              <p class="lead">netkeibaのレースURL情報を打ち込むと、優先的に見たい情報が表示されます</p>
             </div>
           </div>
 
           <div>
             <div class="text-center mb-3">
               {#if message === "ロード中"}
-                <p><Fa icon={faSpinner} size="3x" pulse /></p>
+                <div class="spinner-border" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
               {/if}
               <p>{message}</p>
             </div>
@@ -78,7 +84,7 @@
                   <h4>{searchResult.name}({searchResult.racetrack}{searchResult.distance})</h4>
                 </div>
 
-                <table class="table">
+                <table class="table align-middle">
                   <thead>
                     <tr>
                       <th scope="col">#</th>
@@ -114,10 +120,6 @@
             <div id="race_results" class="mb-3">
               {#if Object.keys(raceResults).length !== 0}
                 <div class="mb-3">
-                  <h4>{selectHorse}</h4>
-                </div>
-
-                <div class="mb-3">
                   <table class="table">
                     <thead>
                       <tr>
@@ -134,7 +136,7 @@
                         <tr class="{searchResult.distance === `${race.distance}m` ? 'table-success' : ''}">
                           <td>{race.date.replaceAll(/T.*/g, "").replaceAll("-", "/")}</td>
                           <td>{race.raceName}</td>
-                          <td>{race.result}</td>
+                          <td>{race.result === -1 ? "除" : race.result}</td>
                           <td>{race.distance}</td>
                           <td>{race.baba}</td>
                           <td>{race.time}</td>
@@ -142,6 +144,15 @@
                       {/each}
                     </tbody>
                   </table>
+                </div>
+
+                <div class="mb-3 w-100 d-flex justify-content-center">
+                  <div class="card w-50 text-center shadow">
+                    <div class="card-body">
+                      <h5 class="card-title">{selectHorse.name}</h5>
+                    </div>
+                    <img src={selectHorse.imgUrl} alt="馬の画像" class="horse-img card-img-bottom">
+                  </div>
                 </div>
               {/if}
             </div>

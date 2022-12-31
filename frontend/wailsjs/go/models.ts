@@ -42,6 +42,7 @@ export namespace web_scraping {
 		}
 	}
 	export class Horse {
+	    img_url: string;
 	    name: string;
 	    play_game_count: number;
 	    win: number;
@@ -58,6 +59,7 @@ export namespace web_scraping {
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.img_url = source["img_url"];
 	        this.name = source["name"];
 	        this.play_game_count = source["play_game_count"];
 	        this.win = source["win"];
