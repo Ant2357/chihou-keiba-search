@@ -120,7 +120,7 @@ func ReadRace(url string) (Race, error) {
 
 		horseTableTbody := horseDoc.Find("#db_main_box > div.db_main_deta > div > div.db_prof_area_02 > table > tbody").Text()
 
-		imgUrl, _ := horseDoc.Find("#HorseMainPhoto").Attr("src")
+		imgUrl, _ := horseDoc.Find(".db_photo_main").Attr("src")
 		name := horseDoc.Find("#db_main_box > div.db_head.fc > div.db_head_name.fc > div.horse_title > h1").Text()
 		playGameCount := toInt64(regexp.MustCompile(`[0-9]{1,}戦`).FindString(horseTableTbody))
 		win := toInt64(regexp.MustCompile(`[0-9]{1,}勝`).FindString(horseTableTbody))
