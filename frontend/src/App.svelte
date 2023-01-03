@@ -150,8 +150,19 @@
                   <div class="card w-50 text-center shadow">
                     <div class="card-body">
                       <h5 class="card-title">{selectHorse.name}</h5>
+
+                      <img src={selectHorse.imgUrl} alt="馬の画像" class="horse-img card-img-bottom">
+
+                      <div class="pedigree">
+                        <div class="pedigree-item pedigree-parents pedigree-item-father">父</div>
+                        <div class="pedigree-item pedigree-grandparents pedigree-item-father">祖父</div>
+                        <div class="pedigree-item pedigree-grandparents pedigree-item-mother">祖母</div>
+                        <div class="pedigree-item pedigree-parents pedigree-item-mother">母</div>
+                        <div class="pedigree-item pedigree-grandparents pedigree-item-father">祖父</div>
+                        <div class="pedigree-item pedigree-grandparents pedigree-item-mother">祖母</div>
+                      </div>
+
                     </div>
-                    <img src={selectHorse.imgUrl} alt="馬の画像" class="horse-img card-img-bottom">
                   </div>
                 </div>
               {/if}
@@ -175,4 +186,30 @@
 .container-top {
   max-width: 960px;
 }
+
+.pedigree {
+  display: grid;
+  grid-template-rows: repeat(2, auto);
+  border: solid 1px #212529;
+}
+.pedigree-item {
+  border: solid 1px #212529;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.pedigree-parents {
+  grid-column: 1;
+  grid-row: span 2;
+}
+.pedigree-grandparents {
+  grid-column: 2;
+}
+.pedigree-item-father {
+  background-color: #a9ceec;
+}
+.pedigree-item-mother {
+  background-color: #f09199;
+}
+
 </style>

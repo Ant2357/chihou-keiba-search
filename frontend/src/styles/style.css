@@ -1,6 +1,6 @@
 @font-face {
     font-family: "NosutaruDotMPlus";
-    src: url("./assets/fonts/Nosutaru-dotMPlusH-10-Regular.ttf") format("truetype");
+    src: url("./../assets/fonts/Nosutaru-dotMPlusH-10-Regular.ttf") format("truetype");
 }
 .font-nosutaruDotMPlus {
     font-family: "NosutaruDotMPlus";
