@@ -9,7 +9,8 @@
   let raceResults = []
   let selectHorse = {
     name: "",
-    imgUrl: ""
+    imgUrl: "",
+    pedigree: {}
   }
   let message = ""
 
@@ -27,6 +28,7 @@
     raceResults = searchResult.horses[index].results;
     selectHorse.name = searchResult.horses[index].name;
     selectHorse.imgUrl = searchResult.horses[index].img_url;
+    selectHorse.pedigree = searchResult.horses[index].pedigree;
   }
 </script>
 
@@ -154,12 +156,12 @@
                       <img src={selectHorse.imgUrl} alt="馬の画像" class="horse-img card-img-bottom">
 
                       <div class="pedigree">
-                        <div class="pedigree-item pedigree-parents pedigree-item-father">父</div>
-                        <div class="pedigree-item pedigree-grandparents pedigree-item-father">祖父</div>
-                        <div class="pedigree-item pedigree-grandparents pedigree-item-mother">祖母</div>
-                        <div class="pedigree-item pedigree-parents pedigree-item-mother">母</div>
-                        <div class="pedigree-item pedigree-grandparents pedigree-item-father">祖父</div>
-                        <div class="pedigree-item pedigree-grandparents pedigree-item-mother">祖母</div>
+                        <div class="pedigree-item pedigree-parents pedigree-item-father">{selectHorse.pedigree.father}</div>
+                        <div class="pedigree-item pedigree-grandparents pedigree-item-father">{selectHorse.pedigree.paternal_grandfather}</div>
+                        <div class="pedigree-item pedigree-grandparents pedigree-item-mother">{selectHorse.pedigree.paternal_grandmother}</div>
+                        <div class="pedigree-item pedigree-parents pedigree-item-mother">{selectHorse.pedigree.mother}</div>
+                        <div class="pedigree-item pedigree-grandparents pedigree-item-father">{selectHorse.pedigree.maternal_grandfather}</div>
+                        <div class="pedigree-item pedigree-grandparents pedigree-item-mother">{selectHorse.pedigree.maternal_grandmother}</div>
                       </div>
 
                     </div>

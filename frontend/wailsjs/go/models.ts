@@ -41,6 +41,28 @@ export namespace web_scraping {
 		    return a;
 		}
 	}
+	export class Pedigree {
+	    father: string;
+	    paternal_grandfather: string;
+	    paternal_grandmother: string;
+	    mother: string;
+	    maternal_grandfather: string;
+	    maternal_grandmother: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new Pedigree(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.father = source["father"];
+	        this.paternal_grandfather = source["paternal_grandfather"];
+	        this.paternal_grandmother = source["paternal_grandmother"];
+	        this.mother = source["mother"];
+	        this.maternal_grandfather = source["maternal_grandfather"];
+	        this.maternal_grandmother = source["maternal_grandmother"];
+	    }
+	}
 	export class Horse {
 	    img_url: string;
 	    name: string;
@@ -51,6 +73,7 @@ export namespace web_scraping {
 	    distance_aptitude: string;
 	    running_style: string;
 	    heavy_racetrack: string;
+	    pedigree: Pedigree;
 	    results: RaceResult[];
 	
 	    static createFrom(source: any = {}) {
@@ -68,6 +91,7 @@ export namespace web_scraping {
 	        this.distance_aptitude = source["distance_aptitude"];
 	        this.running_style = source["running_style"];
 	        this.heavy_racetrack = source["heavy_racetrack"];
+	        this.pedigree = this.convertValues(source["pedigree"], Pedigree);
 	        this.results = this.convertValues(source["results"], RaceResult);
 	    }
 	
@@ -89,6 +113,7 @@ export namespace web_scraping {
 		    return a;
 		}
 	}
+	
 	export class Race {
 	    name: string;
 	    racetrack: string;

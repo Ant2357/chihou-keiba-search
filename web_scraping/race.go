@@ -33,7 +33,17 @@ type Horse struct {
 	DistanceAptitude string       `json:"distance_aptitude"`
 	RunningStyle     string       `json:"running_style"`
 	HeavyRacetrack   string       `json:"heavy_racetrack"`
+	Pedigree         Pedigree     `json:"pedigree"`
 	Results          []RaceResult `json:"results"`
+}
+
+type Pedigree struct {
+	Father              string `json:"father"`
+	PaternalGrandfather string `json:"paternal_grandfather"`
+	PaternalGrandmother string `json:"paternal_grandmother"`
+	Mother              string `json:"mother"`
+	MaternalGrandfather string `json:"maternal_grandfather"`
+	MaternalGrandmother string `json:"maternal_grandmother"`
 }
 
 type RaceResult struct {
@@ -160,6 +170,25 @@ func ReadRace(url string) (Race, error) {
 			"得意",
 			"苦手")
 
+		// 血統情報のWebスクレイピング
+		father := horseDoc.Find("#db_main_box > div.db_main_deta > div > div.db_prof_area_02 > div > dl > dd > table > tbody > tr:nth-child(1) > td:nth-child(1) > a").Text()
+		paternalGrandfather := horseDoc.Find("#db_main_box > div.db_main_deta > div > div.db_prof_area_02 > div > dl > dd > table > tbody > tr:nth-child(1) > td:nth-child(2) > a").Text()
+		paternalGrandmother := horseDoc.Find("#db_main_box > div.db_main_deta > div > div.db_prof_area_02 > div > dl > dd > table > tbody > tr:nth-child(2) > td > a").Text()
+
+		mother := horseDoc.Find("#db_main_box > div.db_main_deta > div > div.db_prof_area_02 > div > dl > dd > table > tbody > tr:nth-child(3) > td.b_fml > a").Text()
+		MaternalGrandfather := horseDoc.Find("#db_main_box > div.db_main_deta > div > div.db_prof_area_02 > div > dl > dd > table > tbody > tr:nth-child(3) > td.b_ml > a").Text()
+		MaternalGrandmother := horseDoc.Find("#db_main_box > div.db_main_deta > div > div.db_prof_area_02 > div > dl > dd > table > tbody > tr:nth-child(4) > td > a").Text()
+
+		pedigree := Pedigree{
+			Father:              father,
+			PaternalGrandfather: paternalGrandfather,
+			PaternalGrandmother: paternalGrandmother,
+			Mother:              mother,
+			MaternalGrandfather: MaternalGrandfather,
+			MaternalGrandmother: MaternalGrandmother,
+		}
+
+		// レース情報のWebスクレイピング
 		raceResults := make([]RaceResult, 0)
 		horseDoc.Find("#contents > div.db_main_race.fc > div > table > tbody > tr").Each(func(j int, selection *goquery.Selection) {
 			if j >= 10 {
@@ -210,6 +239,7 @@ func ReadRace(url string) (Race, error) {
 			DistanceAptitude: distanceAptitude,
 			RunningStyle:     runningStyle,
 			HeavyRacetrack:   heavyRacetrack,
+			Pedigree:         pedigree,
 			Results:          raceResults,
 		})
 	})
