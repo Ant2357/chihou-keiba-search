@@ -2,7 +2,8 @@
   import Fa from 'svelte-fa'
   import { faSearch } from '@fortawesome/free-solid-svg-icons'
   import logo from './assets/images/logo-universal.png'
-  import {WebScrapingRace} from "../wailsjs/go/main/App.js"
+  import { WebScrapingRace } from "../wailsjs/go/main/App.js"
+  import HorseCard from "./components/HorseCard.svelte"
 
   let url = ""
   let searchResult = {}
@@ -149,23 +150,7 @@
                 </div>
 
                 <div class="mb-3 w-100 d-flex justify-content-center">
-                  <div class="card w-50 text-center shadow">
-                    <div class="card-body">
-                      <h5 class="card-title">{selectHorse.name}</h5>
-
-                      <img src={selectHorse.imgUrl} alt="馬の画像" class="horse-img card-img-bottom">
-
-                      <div class="pedigree">
-                        <div class="pedigree-item pedigree-parents pedigree-item-father">{selectHorse.pedigree.father}</div>
-                        <div class="pedigree-item pedigree-grandparents pedigree-item-father">{selectHorse.pedigree.paternal_grandfather}</div>
-                        <div class="pedigree-item pedigree-grandparents pedigree-item-mother">{selectHorse.pedigree.paternal_grandmother}</div>
-                        <div class="pedigree-item pedigree-parents pedigree-item-mother">{selectHorse.pedigree.mother}</div>
-                        <div class="pedigree-item pedigree-grandparents pedigree-item-father">{selectHorse.pedigree.maternal_grandfather}</div>
-                        <div class="pedigree-item pedigree-grandparents pedigree-item-mother">{selectHorse.pedigree.maternal_grandmother}</div>
-                      </div>
-
-                    </div>
-                  </div>
+                  <HorseCard horse={selectHorse} />
                 </div>
               {/if}
             </div>
@@ -187,31 +172,6 @@
 
 .container-top {
   max-width: 960px;
-}
-
-.pedigree {
-  display: grid;
-  grid-template-rows: repeat(2, auto);
-  border: solid 1px #212529;
-}
-.pedigree-item {
-  border: solid 1px #212529;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.pedigree-parents {
-  grid-column: 1;
-  grid-row: span 2;
-}
-.pedigree-grandparents {
-  grid-column: 2;
-}
-.pedigree-item-father {
-  background-color: #a9ceec;
-}
-.pedigree-item-mother {
-  background-color: #f09199;
 }
 
 </style>
