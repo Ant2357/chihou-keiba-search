@@ -5,7 +5,8 @@ export namespace web_scraping {
 	    date: any;
 	    raceName: string;
 	    result: number;
-	    distance: string;
+	    type: string;
+	    distance: number;
 	    baba: string;
 	    time: string;
 	
@@ -18,6 +19,7 @@ export namespace web_scraping {
 	        this.date = this.convertValues(source["date"], null);
 	        this.raceName = source["raceName"];
 	        this.result = source["result"];
+	        this.type = source["type"];
 	        this.distance = source["distance"];
 	        this.baba = source["baba"];
 	        this.time = source["time"];
@@ -117,7 +119,8 @@ export namespace web_scraping {
 	export class Race {
 	    name: string;
 	    racetrack: string;
-	    distance: string;
+	    type: string;
+	    distance: number;
 	    horses: Horse[];
 	
 	    static createFrom(source: any = {}) {
@@ -128,6 +131,7 @@ export namespace web_scraping {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.name = source["name"];
 	        this.racetrack = source["racetrack"];
+	        this.type = source["type"];
 	        this.distance = source["distance"];
 	        this.horses = this.convertValues(source["horses"], Horse);
 	    }

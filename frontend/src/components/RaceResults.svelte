@@ -16,11 +16,11 @@
   </thead>
   <tbody>
     {#each raceResults as race}
-      <tr class="{activeDistance === `${race.distance}m` ? 'table-success' : ''}">
+      <tr class="{activeDistance === race.distance ? 'table-success' : ''}">
         <td>{race.date.replaceAll(/T.*/g, "").replaceAll("-", "/")}</td>
         <td>{race.raceName}</td>
         <td>{race.result === -1 ? "除" : race.result}</td>
-        <td>{race.distance}</td>
+        <td>{race.type}{race.distance}m</td>
         <td>{race.baba}</td>
         <td>{race.time}</td>
       </tr>

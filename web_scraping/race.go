@@ -19,7 +19,8 @@ import (
 type Race struct {
 	Name      string  `json:"name"`
 	RaceTrack string  `json:"racetrack"`
-	Distance  string  `json:"distance"`
+	Type      string  `json:"type"`
+	Distance  int     `json:"distance"`
 	Horses    []Horse `json:"horses"`
 }
 
@@ -50,7 +51,8 @@ type RaceResult struct {
 	Date     time.Time `json:"date"`
 	RaceName string    `json:"raceName"`
 	Result   int       `json:"result"`
-	Distance string    `json:"distance"`
+	Type     string    `json:"type"`
+	Distance int       `json:"distance"`
 	Baba     string    `json:"baba"`
 	Time     string    `json:"time"`
 }
@@ -63,6 +65,14 @@ func toInt64(strVal string) int64 {
 		panic(err)
 	}
 	return intVal
+}
+
+func readRaceType(raceText string) string {
+	if raceText[0:3] == "ダ" {
+		return "ダート"
+	} else {
+		return "芝"
+	}
 }
 
 func loadDocument(url string) (*goquery.Document, error) {
@@ -210,12 +220,16 @@ func ReadRace(url string) (Race, error) {
 
 			var result int64
 			strResult := selection.Find("td:nth-child(12)").Text()
-			if strResult == "除" {
+			if strResult == "" || strResult == "除" || strResult == "取" {
 				result = -1
 			} else {
 				result = toInt64(strResult)
 			}
-			distance := selection.Find("td:nth-child(15)").Text()
+			raceText := selection.Find("td:nth-child(15)").Text()
+
+			raceType := readRaceType(raceText)
+			distance := toInt64(raceText)
+
 			baba := selection.Find("td:nth-child(16)").Text()
 			time := selection.Find("td:nth-child(18)").Text()
 
@@ -223,7 +237,8 @@ func ReadRace(url string) (Race, error) {
 				Date:     date,
 				RaceName: raceName,
 				Result:   int(result),
-				Distance: distance,
+				Type:     raceType,
+				Distance: int(distance),
 				Baba:     baba,
 				Time:     time,
 			})
@@ -244,14 +259,19 @@ func ReadRace(url string) (Race, error) {
 		})
 	})
 
-	raceName := strings.TrimSpace(doc.Find("#Netkeiba_Race_Nar_Shutuba > div.Wrap.fc > div.RaceColumn01 > div > div.RaceMainColumn > div.RaceList_NameBox > div.RaceList_Item02 > div.RaceName").Text())
+	raceName := strings.TrimSpace(doc.Find("div.RaceName").Text())
 	raceTrack := doc.Find("#Netkeiba_Race_Nar_Shutuba > div.Wrap.fc > div.RaceColumn01 > div > div.RaceMainColumn > div.RaceList_NameBox > div.RaceList_Item02 > div.RaceData02 > span:nth-child(2)").Text()
-	distance := strings.TrimSpace(doc.Find("#Netkeiba_Race_Nar_Shutuba > div.Wrap.fc > div.RaceColumn01 > div > div.RaceMainColumn > div.RaceList_NameBox > div.RaceList_Item02 > div.RaceData01 > span:nth-child(1)").Text())
+
+	raceText := strings.TrimSpace(doc.Find("div.RaceData01 > span:nth-child(1)").Text())
+
+	raceType := readRaceType(raceText)
+	distance := toInt64(raceText)
 
 	race := Race{
 		Name:      raceName,
 		RaceTrack: raceTrack,
-		Distance:  distance,
+		Type:      raceType,
+		Distance:  int(distance),
 		Horses:    horses,
 	}
 

@@ -87,7 +87,7 @@
             <div class="mb-3">
               {#if Object.keys(searchResult).length !== 0}
                 <div class="mb-3">
-                  <h4>{searchResult.name}({searchResult.racetrack}{searchResult.distance})</h4>
+                  <h4>{searchResult.name}({searchResult.racetrack}{searchResult.type}{searchResult.distance}m)</h4>
                 </div>
 
                 <table class="table align-middle">
