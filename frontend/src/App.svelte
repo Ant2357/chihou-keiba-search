@@ -2,8 +2,11 @@
   import Fa from 'svelte-fa'
   import { faSearch } from '@fortawesome/free-solid-svg-icons'
   import logo from './assets/images/logo-universal.png'
+
   import { WebScrapingRace } from "../wailsjs/go/main/App.js"
+
   import HorseCard from "./components/HorseCard.svelte"
+  import RaceResults from "./components/RaceResults.svelte"
 
   let url = ""
   let searchResult = {}
@@ -123,30 +126,10 @@
             <div id="race_results" class="mb-3">
               {#if Object.keys(raceResults).length !== 0}
                 <div class="mb-3">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th scope="col">日付</th>
-                        <th scope="col">レース名</th>
-                        <th scope="col">着順</th>
-                        <th scope="col">距離</th>
-                        <th scope="col">馬場</th>
-                        <th scope="col">タイム</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {#each raceResults as race}
-                        <tr class="{searchResult.distance === `${race.distance}m` ? 'table-success' : ''}">
-                          <td>{race.date.replaceAll(/T.*/g, "").replaceAll("-", "/")}</td>
-                          <td>{race.raceName}</td>
-                          <td>{race.result === -1 ? "除" : race.result}</td>
-                          <td>{race.distance}</td>
-                          <td>{race.baba}</td>
-                          <td>{race.time}</td>
-                        </tr>
-                      {/each}
-                    </tbody>
-                  </table>
+                  <RaceResults
+                    raceResults={raceResults}
+                    activeDistance={searchResult.distance}
+                  />
                 </div>
 
                 <div class="mb-3 w-100 d-flex justify-content-center">
