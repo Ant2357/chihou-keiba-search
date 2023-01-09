@@ -30,6 +30,7 @@ type Horse struct {
 	PlayGameCount    int          `json:"play_game_count"`
 	Win              int          `json:"win"`
 	Lose             int          `json:"lose"`
+	Wp               float64      `json:"wp"`
 	CourseAptitude   string       `json:"course_aptitude"`
 	DistanceAptitude string       `json:"distance_aptitude"`
 	RunningStyle     string       `json:"running_style"`
@@ -142,9 +143,10 @@ func ReadRace(url string) (Race, error) {
 
 		imgUrl, _ := horseDoc.Find(".db_photo_main").Attr("src")
 		name := horseDoc.Find("#db_main_box > div.db_head.fc > div.db_head_name.fc > div.horse_title > h1").Text()
-		playGameCount := toInt64(regexp.MustCompile(`[0-9]{1,}戦`).FindString(horseTableTbody))
-		win := toInt64(regexp.MustCompile(`[0-9]{1,}勝`).FindString(horseTableTbody))
+		playGameCount := int(toInt64(regexp.MustCompile(`[0-9]{1,}戦`).FindString(horseTableTbody)))
+		win := int(toInt64(regexp.MustCompile(`[0-9]{1,}勝`).FindString(horseTableTbody)))
 		lose := playGameCount - win
+		wp := float64(float64(win)/float64(win+lose)) * 100.0
 
 		// 適正情報(コース or 距離など)を読み込む関数
 		// imgSelectorPath: 適正情報が書かれた画像のCSSセレクタPath
@@ -247,9 +249,10 @@ func ReadRace(url string) (Race, error) {
 		horses = append(horses, Horse{
 			ImgUrl:           imgUrl,
 			Name:             name,
-			PlayGameCount:    int(playGameCount),
-			Win:              int(win),
-			Lose:             int(lose),
+			PlayGameCount:    playGameCount,
+			Win:              win,
+			Lose:             lose,
+			Wp:               wp,
 			CourseAptitude:   courseAptitude,
 			DistanceAptitude: distanceAptitude,
 			RunningStyle:     runningStyle,

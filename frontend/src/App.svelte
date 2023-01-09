@@ -98,6 +98,7 @@
                       <th scope="col">レース数</th>
                       <th scope="col">勝利数</th>
                       <th scope="col">敗北数</th>
+                      <th scope="col">勝率</th>
                       <th scope="col">コース適正</th>
                       <th scope="col">距離適正</th>
                       <th scope="col">脚質</th>
@@ -112,6 +113,7 @@
                         <td>{horse.play_game_count}</td>
                         <td>{horse.win}</td>
                         <td>{horse.lose}</td>
+                        <td>{Math.floor(horse.wp)}%</td>
                         <td>{horse.course_aptitude}</td>
                         <td>{horse.distance_aptitude}</td>
                         <td>{horse.running_style}</td>

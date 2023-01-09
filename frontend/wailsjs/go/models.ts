@@ -71,6 +71,7 @@ export namespace web_scraping {
 	    play_game_count: number;
 	    win: number;
 	    lose: number;
+	    wp: number;
 	    course_aptitude: string;
 	    distance_aptitude: string;
 	    running_style: string;
@@ -89,6 +90,7 @@ export namespace web_scraping {
 	        this.play_game_count = source["play_game_count"];
 	        this.win = source["win"];
 	        this.lose = source["lose"];
+	        this.wp = source["wp"];
 	        this.course_aptitude = source["course_aptitude"];
 	        this.distance_aptitude = source["distance_aptitude"];
 	        this.running_style = source["running_style"];
