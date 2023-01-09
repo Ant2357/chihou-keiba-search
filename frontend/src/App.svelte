@@ -53,7 +53,7 @@
           <div class="container">
             <div class="text-center">
               <h1 class="display-4">こんにちは!</h1>
-              <p class="lead">netkeibaのレースURL情報を打ち込むと、優先的に見たい情報が表示されます</p>
+              <p class="lead">netkeibaのレースURL情報を打ち込むと、優先的に見たい地方競馬情報が表示されます</p>
             </div>
           </div>
 
