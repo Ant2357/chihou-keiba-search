@@ -222,7 +222,7 @@ func ReadRace(url string) (Race, error) {
 
 			var result int64
 			strResult := selection.Find("td:nth-child(12)").Text()
-			if strResult == "" || strResult == "除" || strResult == "取" {
+			if strResult == "" || strResult == "除" || strResult == "取" || strResult == "中" {
 				result = -1
 			} else {
 				result = toInt64(strResult)
